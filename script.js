@@ -140,3 +140,7 @@ function fall() {
 let gravityStarted = false;
 let gravitySpeed = 75;
 let gravityInterval = null;
+
+// Voi face 4 functii separate pnetru 
+// o pasare , un cactus 1 patratica, 1 cactus 2 inaltime si 1 cactus 2 latime
+// si voi merge cu una random pana la finalul tablei
