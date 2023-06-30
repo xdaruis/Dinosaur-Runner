@@ -90,6 +90,7 @@ let jump = true;
 
 document.addEventListener('keydown', (e) => {
     if (e.code === 'KeyW' && playerFeet < lines - 2 && jump === true) {
+        document.getElementById("1 2").className = "btn btn-warning";
         colorPosition(playerFeet, playerHead, "btn btn-warning");
         colorPosition(++playerFeet, ++playerHead, "btn btn-success");
         if (playerFeet === lines - 2) {
