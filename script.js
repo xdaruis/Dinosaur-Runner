@@ -99,6 +99,9 @@ document.addEventListener('keydown', (e) => {
         if (playerFeet > 1) {
             colorPosition(playerFeet, playerHead, "btn btn-warning");
             colorPosition(--playerFeet, --playerHead, "btn btn-success");
+        } else {
+            document.getElementById("2 1").className = "btn btn-warning";
+            document.getElementById("1 2").className = "btn btn-success";
         }
     }
     if (playerFeet === 1) {
@@ -111,10 +114,13 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keyup', (e) => {
     e = e || window.event;
     if (e.keyCode == 87) {
-        jump = false;
         if (gravityInterval == null) {
             gravityInterval = setInterval(fall, gravitySpeed);
         }
+        jump = false;
+    } else if (e.keyCode == 83) {
+        document.getElementById("1 2").className = "btn btn-warning";
+        document.getElementById("2 1").className = "btn btn-success";
     }
 });
 
