@@ -1,67 +1,3 @@
-// const playerID = ["5", "4"];
-// document.getElementById(playerID[0] + 0).className = "btn btn-success";
-// document.getElementById(playerID[1] + 0).className = "btn btn-success";
-
-// let gravitation = setInterval(gravity, 300);
-// // let one = setInterval(jump, 2000);
-// // let two = setInterval(jump, 3000);
-// // let three = setInterval(jump, 4000);
-
-// document.addEventListener('keydown', (e) => {
-//     if (e.code === 'KeyW' && playerID[0] == 5) {
-//         jump();
-//         jump();
-//         // let one = setInterval(jump, 10);
-//         // let two = setInterval(jump, 20);
-//         // clearInterval(one);
-//         // clearInterval(two);
-//         // clearInterval(three);
-//     } else if (e.code === 'KeyS') {
-//         if (playerID[0] < 5 && playerID[1] < 4) {
-//             ++playerID[0];
-//             ++playerID[1];
-//         }
-//     }
-// });
-
-// function gravity() {
-//     if (playerID[0] < 5 && playerID[1] < 4) {
-//         ++playerID[0];
-//         ++playerID[1];
-//     }
-// }
-
-// function gravity() {
-//     document.getElementById(playerID[0] + '0').className ="btn btn-warning";
-//     document.getElementById(playerID[1] + '0').className = "btn btn-warning";
-//     if (playerID[0] < 5 && playerID[1] < 4) {
-//         ++playerID[0];
-//         ++playerID[1];
-//     }
-//     document.getElementById(playerID[0] + '0').className ="btn btn-success";
-//     document.getElementById(playerID[1] + '0').className = "btn btn-success";
-// }
-
-// function jump() {
-//     document.getElementById(playerID[0] + '0').className ="btn btn-warning";
-//     document.getElementById(playerID[1] + '0').className = "btn btn-warning";
-//     --playerID[0];
-//     --playerID[1];
-//     document.getElementById(playerID[0] + '0').className ="btn btn-success";
-//     document.getElementById(playerID[1] + '0').className = "btn btn-success";
-// }
-
-// function goDown() {
-//     document.getElementById(playerID[0] + '0').className ="btn btn-warning";
-//     document.getElementById(playerID[1] + '0').className = "btn btn-warning";
-//     if (playerID[0] < 5 && playerID[1] < 4) {
-    //         ++playerID[0];
-    //         ++playerID[1];
-//     }
-//     document.getElementById(playerID[0] + '0').className ="btn btn-success";
-//     document.getElementById(playerID[1] + '0').className = "btn btn-success";
-// }
-
 let playerFeet = 1;
 let playerHead = 2;
 const lines = 7, columns = 9;
@@ -90,7 +26,9 @@ let jump = true;
 
 document.addEventListener('keydown', (e) => {
     if (e.code === 'KeyW' && playerFeet < lines - 2 && jump === true) {
-        document.getElementById("1 2").className = "btn btn-warning";
+        if (document.getElementById("1 2").className === "btn btn-success") {
+            document.getElementById("1 2").className = "btn btn-warning";
+        }
         colorPosition(playerFeet, playerHead, "btn btn-warning");
         colorPosition(++playerFeet, ++playerHead, "btn btn-success");
         if (playerFeet === lines - 2) {
@@ -151,3 +89,53 @@ let gravityInterval = null;
 // Voi face 4 functii separate pnetru 
 // o pasare , un cactus 1 patratica, 1 cactus 2 inaltime si 1 cactus 2 latime
 // si voi merge cu una random pana la finalul tablei
+
+let gameSpeed = 150;
+let gameInterval = setInterval(oneCactus, gameSpeed);
+
+let cactusX = columns;
+let cactusOne = "1" + " " + cactusX;
+document.getElementById(cactusOne).className = "btn btn-dark";
+
+function handleObjects() {
+    let randomObject = Math.floor(Math.random() * 1);
+    if (randomObject == 0) {
+        document.getElementById(cactusOne).className = "btn btn-dark";
+        gameInterval = setInterval(oneCactus, gameSpeed);
+    }
+}
+
+let build = true;
+
+function oneCactus() {
+    if (cactusX == 1) {
+        if (document.getElementById(cactusOne).className === "btn btn-dark") {
+            document.getElementById(cactusOne).className = "btn btn-warning";
+        }
+        cactusX = columns;
+        cactusOne = "1" + " " + cactusX;
+        clearInterval(gameInterval);
+        handleObjects();
+    } else {
+        document.getElementById(cactusOne).className = "btn btn-warning";
+        --cactusX
+        cactusOne = "1" + " " + cactusX;
+        if (document.getElementById(cactusOne).className === "btn btn-success") {
+            document.getElementById(cactusOne).className = "btn btn-dark";
+            gameOver();
+        }
+        document.getElementById(cactusOne).className = "btn btn-dark";
+    }
+}
+
+function gameOver() {
+    const box = document.createElement("div");
+    box.className = "d-flex justify-content-center";
+    document.body.appendChild(box);
+    const div = document.createElement("h1");
+    div.innerHTML = "GAME OVER!";
+    box.appendChild(div);
+    clearInterval(gameInterval);
+    document.removeEventListener('keydown', e);
+    document.removeEventListener('keyup', e);
+}
