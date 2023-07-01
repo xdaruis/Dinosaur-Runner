@@ -261,14 +261,3 @@ function gameOver() {
         event.stopImmediatePropagation();
     }, true);
 }
-
-document.onload = checkColission();
-function checkColission() {
-    while (1) {
-        console.log("HI");
-        if (document.getElementsByClassName("classstringhere").length == 1) {
-            gameOver();
-            break;
-        }
-    }
-}
