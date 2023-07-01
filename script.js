@@ -216,7 +216,6 @@ function bird() {
     }
 }
 
-
 function twoSmallCactus() {
     if (cactusX == 1) {
         if (document.getElementById(cactusOne).className === "btn btn-dark" ||
