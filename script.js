@@ -101,7 +101,6 @@ function colorPosition(feet, head, color) {
     document.getElementById("" + head + " " + "1").className = color;
 }
 
-let gravityStarted = false;
 let gravitySpeed = 75;
 let gravityInterval = null;
 
