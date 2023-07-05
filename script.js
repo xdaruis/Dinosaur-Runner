@@ -32,39 +32,27 @@ function generateBoard() {
     box.appendChild(text);
 }
 
-
 document.addEventListener('keydown', (e) => {
     e = e || window.event;
     if ((e.code === 'KeyW' || e.code === 'ArrowUp') && playerFeet < lines - 2 && jump === true) {
+        movePlayer(1);
+        if (playerFeet === lines - 2) {
+            jump = false;
+            if (gravityInterval === null) {
+                gravityInterval = setInterval(fall, gravitySpeed);
+            }
+        }
         if (document.getElementById("1 2").className === "btn btn-success") {
             document.getElementById("1 2").className = "btn btn-warning";
         }
-        colorPosition(playerFeet, playerHead, "btn btn-warning");
-        ++playerFeet;
-        ++playerHead;
-        // checkPlayerHitObject();
-        colorPosition(playerFeet, playerHead, "btn btn-success");
-        if (playerFeet === lines - 2) {
-            jump = false;
-        }
     } else if (e.code === 'KeyS' || e.code === 'ArrowDown') {
         if (playerFeet > 1) {
-            colorPosition(playerFeet, playerHead, "btn btn-warning");
-            --playerFeet;
-            --playerHead;
-            // checkPlayerHitObject();
-            colorPosition(playerFeet, playerHead, "btn btn-success");
+            movePlayer(-1);
         } else {
             document.getElementById("2 1").className = "btn btn-warning";
             document.getElementById("1 2").className = "btn btn-success";
             document.getElementById("1 1").className = "btn btn-success";
-            // checkPlayerDucked();
         }
-    }
-    if (playerFeet === 1) {
-        jump = true;
-    } else if (playerFeet === lines - 2 && gravityInterval === null) {
-        gravityInterval = setInterval(fall, gravitySpeed);
     }
 });
 
@@ -78,40 +66,32 @@ document.addEventListener('keyup', (e) => {
     } else if (e.code === 'KeyS' || e.code === 'ArrowDown') {
         document.getElementById("1 2").className = "btn btn-warning";
         document.getElementById("2 1").className = "btn btn-success";
-        // checkPlayerHitObject();
     }
 });
 
-// function checkPlayerHitObject() {
-//     if (document.getElementById(playerFeet).className === "btn btn-dark" ||
-//     document.getElementById(playerHead).className === "btn btn-dark") {
-//             gameOver();
-//         }
-// }
+function movePlayer(value) {
+    colorPosition("btn btn-warning");
+    playerFeet += value;
+    playerHead += value;
+    // if (document.getElementById(playerHead).className == "btn btn-dark" ||
+    //     document.getElementById(playerFeet).className == "btn btn-dark")) {
+    //     gameOver();
+    // }
+    colorPosition("btn btn-success");
+}
 
-// function checkPlayerDucked() {
-//     if (document.getElementById("1 2").className === "btn btn-dark" ||
-//         document.getElementById("1 1").className === "btn btn-dark") {
-//         gameOver();
-//     }
-// }
-
-function colorPosition(feet, head, color) {
-    document.getElementById("" + feet + " " + "1").className = color;
-    document.getElementById("" + head + " " + "1").className = color;
+function colorPosition(color) {
+    document.getElementById("" + playerFeet + " " + "1").className = color;
+    document.getElementById("" + playerHead + " " + "1").className = color;
 }
 
 let gravitySpeed = 75;
 let gravityInterval = null;
 
 function fall() {
-    colorPosition(playerFeet, playerHead, "btn btn-warning");
     if (playerFeet > 1) {
-        --playerFeet;
-        --playerHead
-    }
-    colorPosition(playerFeet, playerHead, "btn btn-success");
-    if (playerFeet == 1) {
+        movePlayer(-1);
+    } else {
         jump = true;
         clearInterval(gravityInterval);
         gravityInterval = null;
@@ -158,7 +138,6 @@ function handleObjects() {
         gameInterval = setInterval(bird, gameSpeed);
     } else {
         document.getElementById(cactusOne).className = "btn btn-dark";
-        console.log(smallCactusId);
         document.getElementById(smallCactusId).className = "btn btn-dark";
         gameInterval = setInterval(twoSmallCactus, gameSpeed);
     }
