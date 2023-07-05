@@ -74,7 +74,7 @@ function movePlayer(value) {
     playerFeet += value;
     playerHead += value;
     // if (document.getElementById(playerHead).className == "btn btn-dark" ||
-    //     document.getElementById(playerFeet).className == "btn btn-dark")) {
+    //     document.getElementById(playerFeet).className == "btn btn-dark") {
     //     gameOver();
     // }
     colorPosition("btn btn-success");
@@ -123,7 +123,10 @@ function handleObjects() {
         ++objects;
     }
     ++score;
-    gameSpeed -= 0.5;
+    if (gameSpeed > 40) {
+        gameSpeed -= 0.5;
+
+    }
     document.getElementById("score").innerHTML = "Score: " + score;
     let randomObject = Math.floor(Math.random() * objects);
     if (randomObject == 0) {
@@ -134,8 +137,9 @@ function handleObjects() {
         document.getElementById(cactusTwo).className = "btn btn-dark";
         gameInterval = setInterval(twoHeightCactus, gameSpeed);
     } else if (randomObject == 2) {
+        const TWENTY = 20;
         document.getElementById(birdId).className = "btn btn-dark";
-        gameInterval = setInterval(bird, gameSpeed);
+        gameInterval = setInterval(bird, gameSpeed - TWENTY);
     } else {
         document.getElementById(cactusOne).className = "btn btn-dark";
         document.getElementById(smallCactusId).className = "btn btn-dark";
