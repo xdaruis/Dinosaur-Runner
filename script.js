@@ -54,6 +54,9 @@ document.addEventListener('keydown', (e) => {
             document.getElementById("1 1").className = "btn btn-success";
         }
     }
+    if (playerFeet === 1) {
+        jump = true;
+    }
 });
 
 document.addEventListener('keyup', (e) => {
@@ -66,6 +69,9 @@ document.addEventListener('keyup', (e) => {
     } else if (e.code === 'KeyS' || e.code === 'ArrowDown') {
         document.getElementById("1 2").className = "btn btn-warning";
         document.getElementById("2 1").className = "btn btn-success";
+    }
+    if (playerFeet === 1) {
+        jump = true;
     }
 });
 
