@@ -105,15 +105,15 @@ function fall() {
 }
 
 let gameSpeed = 150;
-let gameInterval = setInterval(oneCactus, gameSpeed);
+let gameInterval = setInterval(moveOneCactus, gameSpeed);
 
 let actColumn = columns;
-let cactusOne = "1" + " " + actColumn;
-document.getElementById(cactusOne).className = "btn btn-dark";
+let cactusOneId = "1" + " " + actColumn;
+document.getElementById(cactusOneId).className = "btn btn-dark";
 
 let smallCactusId = "1" + " " + (columns - 1);
 
-let cactusTwo = "2" + " " + actColumn;
+let cactusTwoId = "2" + " " + actColumn;
 
 let birdHeight = 1 + Math.floor(Math.random() * lines / 2);
 let birdId = "" + birdHeight + " " + actColumn;
@@ -128,82 +128,120 @@ function handleObjects() {
     } else if (score === 15) {
         ++objects;
     }
-    ++score;
     if (gameSpeed > 40) {
         gameSpeed -= 0.5;
-
+        
     }
+    ++score;
     document.getElementById("score").innerHTML = "Score: " + score;
     let randomObject = Math.floor(Math.random() * objects);
-    if (randomObject == 0) {
-        document.getElementById(cactusOne).className = "btn btn-dark";
-        gameInterval = setInterval(oneCactus, gameSpeed);
-    } else if (randomObject == 1) {
-        document.getElementById(cactusOne).className = "btn btn-dark";
-        document.getElementById(cactusTwo).className = "btn btn-dark";
-        gameInterval = setInterval(twoHeightCactus, gameSpeed);
-    } else if (randomObject == 2) {
-        const TWENTY = 20;
-        document.getElementById(birdId).className = "btn btn-dark";
-        gameInterval = setInterval(bird, gameSpeed - TWENTY);
+    for (let i = 0; i < dict[randomObject].length; ++i) {
+        document.getElementById(dict[randomObject][i]).className = "btn btn-dark";
+    }
+    gameInterval = setInterval(dict["" + randomObject + "move"], gameSpeed);
+}
+
+const dict = {
+    0: [cactusOneId],
+    "0default": ["1" + " " + columns],
+    1: [cactusOneId, cactusTwoId],
+    "1default": ["1" + " " + columns, "2" + " " + actColumn],
+    2: [birdId],
+    "2default": ["" + (1 + Math.floor(Math.random() * lines / 2)) + " " + actColumn],
+    3: [cactusOneId, smallCactusId],
+    "3default": ["1" + " " + columns, "1" + " " + (columns - 1)],
+    "0move": moveOneCactus,
+    "1move": moveTwoHeightCactus,
+    "2move": moveBird,
+    "3move": twoSmallCactus
+};
+
+function moveMe(num) {
+    if (actColumn == 1) {
+        // for (let i = 0; i < dict[num].length; ++i) {
+        //     if (document.getElementById(dict[num][i]).className === "btn btn-dark") {
+        //         document.getElementById(dict[num][i]).className = "btn btn-warning";
+        //     }
+        // }
+        // actColumn = columns;
+        // // cactusOneId = "1" + " " + actColumn;
+        // for (let i = 0; i < dict[num].length; ++i) {
+        //     // if (document.getElementById(dict[num][i]).className === "btn btn-dark") {
+        //     //     document.getElementById(dict[num][i]).className = "btn btn-warning";
+        //     // }
+        //     dict[num][i] = dict[num + "default"][i];
+        //     // document.getElementById(dict[randomObject][i]).className = "btn btn-dark";
+        // }
+        // clearInterval(gameInterval);
+        // handleObjects();
     } else {
-        document.getElementById(cactusOne).className = "btn btn-dark";
-        document.getElementById(smallCactusId).className = "btn btn-dark";
-        gameInterval = setInterval(twoSmallCactus, gameSpeed);
+        // for (let i = 0; i < dict[num].length; ++i) {
+        //     if (document.getElementById(dict[num][i]).className === "btn btn-dark") {
+        //         document.getElementById(dict[num][i]).className = "btn btn-warning";
+        //     }
+        // }
+        document.getElementById(cactusOneId).className = "btn btn-warning";
+        --actColumn
+        cactusOneId = "1" + " " + actColumn;
+        if (document.getElementById(cactusOneId).className === "btn btn-success") {
+            document.getElementById(cactusOneId).className = "btn btn-dark";
+            gameOver();
+        }
+        document.getElementById(cactusOneId).className = "btn btn-dark";
     }
 }
 
-function oneCactus() {
+function moveOneCactus() {
     if (actColumn == 1) {
-        if (document.getElementById(cactusOne).className === "btn btn-dark") {
-            document.getElementById(cactusOne).className = "btn btn-warning";
+        if (document.getElementById(cactusOneId).className === "btn btn-dark") {
+            document.getElementById(cactusOneId).className = "btn btn-warning";
         }
         actColumn = columns;
-        cactusOne = "1" + " " + actColumn;
+        cactusOneId = "1" + " " + actColumn;
         clearInterval(gameInterval);
         handleObjects();
     } else {
-        document.getElementById(cactusOne).className = "btn btn-warning";
+        document.getElementById(cactusOneId).className = "btn btn-warning";
         --actColumn
-        cactusOne = "1" + " " + actColumn;
-        if (document.getElementById(cactusOne).className === "btn btn-success") {
-            document.getElementById(cactusOne).className = "btn btn-dark";
+        cactusOneId = "1" + " " + actColumn;
+        if (document.getElementById(cactusOneId).className === "btn btn-success") {
+            document.getElementById(cactusOneId).className = "btn btn-dark";
             gameOver();
         }
-        document.getElementById(cactusOne).className = "btn btn-dark";
+        document.getElementById(cactusOneId).className = "btn btn-dark";
     }
 }
 
 
-function twoHeightCactus() {
+function moveTwoHeightCactus() {
     if (actColumn == 1) {
-        if (document.getElementById(cactusOne).className === "btn btn-dark") {
-            document.getElementById(cactusOne).className = "btn btn-warning";
-            document.getElementById(cactusTwo).className = "btn btn-warning";
+        if (document.getElementById(cactusOneId).className === "btn btn-dark") {
+            document.getElementById(cactusOneId).className = "btn btn-warning";
+            document.getElementById(cactusTwoId).className = "btn btn-warning";
         }
         actColumn = columns;
-        cactusOne = "1" + " " + actColumn;
-        cactusTwo = "2" + " " + actColumn;
+        cactusOneId = "1" + " " + actColumn;
+        cactusTwoId = "2" + " " + actColumn;
         clearInterval(gameInterval);
         handleObjects();
     } else {
-        document.getElementById(cactusOne).className = "btn btn-warning";
-        document.getElementById(cactusTwo).className = "btn btn-warning";
+        document.getElementById(cactusOneId).className = "btn btn-warning";
+        document.getElementById(cactusTwoId).className = "btn btn-warning";
         --actColumn
-        cactusOne = "1" + " " + actColumn;
-        cactusTwo = "2" + " " + actColumn;
-        if (document.getElementById(cactusOne).className === "btn btn-success" ||
-            document.getElementById(cactusTwo).className === "btn btn-success") {
-            document.getElementById(cactusOne).className = "btn btn-dark";
+        cactusOneId = "1" + " " + actColumn;
+        cactusTwoId = "2" + " " + actColumn;
+        if (document.getElementById(cactusOneId).className === "btn btn-success" ||
+            document.getElementById(cactusTwoId).className === "btn btn-success") {
+            document.getElementById(cactusOneId).className = "btn btn-dark";
             gameOver();
         }
-        document.getElementById(cactusOne).className = "btn btn-dark";
-        document.getElementById(cactusTwo).className = "btn btn-dark";
+        document.getElementById(cactusOneId).className = "btn btn-dark";
+        document.getElementById(cactusTwoId).className = "btn btn-dark";
     }
 }
 
 
-function bird() {
+function moveBird() {
     if (actColumn == 1) {
         if (document.getElementById(birdId).className === "btn btn-dark") {
             document.getElementById(birdId).className = "btn btn-warning";
@@ -227,29 +265,29 @@ function bird() {
 
 function twoSmallCactus() {
     if (actColumn == 1) {
-        if (document.getElementById(cactusOne).className === "btn btn-dark" ||
+        if (document.getElementById(cactusOneId).className === "btn btn-dark" ||
             document.getElementById(smallCactusId).className === "btn btn-dark") {
-            document.getElementById(cactusOne).className = "btn btn-warning";
+            document.getElementById(cactusOneId).className = "btn btn-warning";
             document.getElementById(smallCactusId).className = "btn btn-warning";
         }
         actColumn = columns;
-        cactusOne = "1" + " " + actColumn;
+        cactusOneId = "1" + " " + actColumn;
         smallCactusId = "1" + " " + (actColumn - 1);
         clearInterval(gameInterval);
         handleObjects();
     } else {
-        document.getElementById(cactusOne).className = "btn btn-warning";
+        document.getElementById(cactusOneId).className = "btn btn-warning";
         document.getElementById(smallCactusId).className = "btn btn-warning";
         --actColumn
-        cactusOne = "1" + " " + actColumn;
+        cactusOneId = "1" + " " + actColumn;
         smallCactusId = "1" + " " + (actColumn - 1);
-        if (document.getElementById(cactusOne).className === "btn btn-success" ||
+        if (document.getElementById(cactusOneId).className === "btn btn-success" ||
             document.getElementById(smallCactusId).className === "btn btn-success") {
-            document.getElementById(cactusOne).className = "btn btn-dark";
+            document.getElementById(cactusOneId).className = "btn btn-dark";
             document.getElementById(smallCactusId).className = "btn btn-dark";
             gameOver();
         }
-        document.getElementById(cactusOne).className = "btn btn-dark";
+        document.getElementById(cactusOneId).className = "btn btn-dark";
         document.getElementById(smallCactusId).className = "btn btn-dark";
     }
 }
