@@ -49,7 +49,9 @@ document.addEventListener('keydown', (e) => {
         if (playerFeet > 1) {
             movePlayer(-1);
         } else {
-            document.getElementById("2 1").className = "btn btn-warning";
+            if (document.getElementById("2 1").className === "btn btn-success") {
+                document.getElementById("2 1").className = "btn btn-warning";
+            }
             document.getElementById("1 2").className = "btn btn-success";
             document.getElementById("1 1").className = "btn btn-success";
         }
