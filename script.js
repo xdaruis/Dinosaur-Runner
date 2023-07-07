@@ -79,10 +79,10 @@ function movePlayer(value) {
     colorPosition("btn btn-warning");
     playerFeet += value;
     playerHead += value;
-    // if (document.getElementById(playerHead).className == "btn btn-dark" ||
-    //     document.getElementById(playerFeet).className == "btn btn-dark") {
-    //     gameOver();
-    // }
+    if (document.getElementById(playerHead).className == "btn btn-dark" ||
+        document.getElementById(playerFeet).className == "btn btn-dark") {
+        gameOver();
+    }
     colorPosition("btn btn-success");
 }
 
@@ -135,10 +135,16 @@ function handleObjects() {
     ++score;
     document.getElementById("score").innerHTML = "Score: " + score;
     let randomObject = Math.floor(Math.random() * objects);
+    // let randomObject = 2;
     for (let i = 0; i < dict[randomObject].length; ++i) {
+        if (randomObject == 2) {
+            dict[randomObject][i] = birdId;
+        }
         document.getElementById(dict[randomObject][i]).className = "btn btn-dark";
+        // console.log(dict[randomObject][i]);
     }
     gameInterval = setInterval(dict["" + randomObject + "move"], gameSpeed);
+    // gameInterval = setInterval(moveObject(randomObject), gameSpeed);
 }
 
 const dict = {
@@ -156,40 +162,45 @@ const dict = {
     "3move": twoSmallCactus
 };
 
-function moveMe(num) {
-    if (actColumn == 1) {
-        // for (let i = 0; i < dict[num].length; ++i) {
-        //     if (document.getElementById(dict[num][i]).className === "btn btn-dark") {
-        //         document.getElementById(dict[num][i]).className = "btn btn-warning";
-        //     }
-        // }
-        // actColumn = columns;
-        // // cactusOneId = "1" + " " + actColumn;
-        // for (let i = 0; i < dict[num].length; ++i) {
-        //     // if (document.getElementById(dict[num][i]).className === "btn btn-dark") {
-        //     //     document.getElementById(dict[num][i]).className = "btn btn-warning";
-        //     // }
-        //     dict[num][i] = dict[num + "default"][i];
-        //     // document.getElementById(dict[randomObject][i]).className = "btn btn-dark";
-        // }
-        // clearInterval(gameInterval);
-        // handleObjects();
-    } else {
-        // for (let i = 0; i < dict[num].length; ++i) {
-        //     if (document.getElementById(dict[num][i]).className === "btn btn-dark") {
-        //         document.getElementById(dict[num][i]).className = "btn btn-warning";
-        //     }
-        // }
-        document.getElementById(cactusOneId).className = "btn btn-warning";
-        --actColumn
-        cactusOneId = "1" + " " + actColumn;
-        if (document.getElementById(cactusOneId).className === "btn btn-success") {
-            document.getElementById(cactusOneId).className = "btn btn-dark";
-            gameOver();
-        }
-        document.getElementById(cactusOneId).className = "btn btn-dark";
-    }
-}
+// functzz
+
+// function moveObject(num) {
+//     if (actColumn == 1) {
+//         for (let i = 0; i < dict[num].length; ++i) {
+//             if (document.getElementById(dict[num]).className === "btn btn-dark") {
+//                 document.getElementById(dict[num].className = "btn btn-warning");
+//             }
+//             if (num == 2) {
+//                 birdHeight = 2 + Math.floor(Math.random() * 3);
+//                 birdId = "" + birdHeight + " " + actColumn;
+//                 dict[num][i] = birdId;
+//             }
+//         }
+//         actColumn = columns;
+//         // cactusOneId = "1" + " " + actColumn;
+//         for (let i = 0; i < dict[num].length; ++i) {
+//             dict[num] = "" + dict[num] + "default";
+//         }
+//         clearInterval(gameInterval);
+//         handleObjects();
+//     } else {
+//         // document.getElementById(cactusOneId).className = "btn btn-warning";
+//         for (let i = 0; i < dict[num].length; ++i) {
+//             document.getElementById(dict[num]).className = "btn btn-warning";
+//         }
+//         --actColumn
+//         cactusOneId = "1" + " " + actColumn;
+//         for (let i = 0; i < dict[num].length; ++i) {
+//             // document.getElementById(dict[num]).className = "btn btn-warning";
+//             dict[num] = 
+//         }
+//         if (document.getElementById(cactusOneId).className === "btn btn-success") {
+//             document.getElementById(cactusOneId).className = "btn btn-dark";
+//             gameOver();
+//         }
+//         document.getElementById(cactusOneId).className = "btn btn-dark";
+//     }
+// }
 
 function moveOneCactus() {
     if (actColumn == 1) {
