@@ -79,10 +79,10 @@ function movePlayer(value) {
     colorPosition("btn btn-warning");
     playerFeet += value;
     playerHead += value;
-    if (document.getElementById(playerHead).className == "btn btn-dark" ||
-        document.getElementById(playerFeet).className == "btn btn-dark") {
-        gameOver();
-    }
+    // if (document.getElementById(playerHead).className == "btn btn-dark" ||
+    //     document.getElementById(playerFeet).className == "btn btn-dark") {
+    //     gameOver();
+    // }
     colorPosition("btn btn-success");
 }
 
@@ -141,7 +141,6 @@ function handleObjects() {
             dict[randomObject][i] = birdId;
         }
         document.getElementById(dict[randomObject][i]).className = "btn btn-dark";
-        // console.log(dict[randomObject][i]);
     }
     gameInterval = setInterval(dict["" + randomObject + "move"], gameSpeed);
     // gameInterval = setInterval(moveObject(randomObject), gameSpeed);
@@ -149,20 +148,18 @@ function handleObjects() {
 
 const dict = {
     0: [cactusOneId],
-    "0default": ["1" + " " + columns],
+    // "0default": ["1" + " " + columns],
     1: [cactusOneId, cactusTwoId],
-    "1default": ["1" + " " + columns, "2" + " " + actColumn],
+    // "1default": ["1" + " " + columns, "2" + " " + actColumn],
     2: [birdId],
-    "2default": ["" + (1 + Math.floor(Math.random() * lines / 2)) + " " + actColumn],
+    // "2default": ["" + (1 + Math.floor(Math.random() * lines / 2)) + " " + actColumn],
     3: [cactusOneId, smallCactusId],
-    "3default": ["1" + " " + columns, "1" + " " + (columns - 1)],
+    // "3default": ["1" + " " + columns, "1" + " " + (columns - 1)],
     "0move": moveOneCactus,
     "1move": moveTwoHeightCactus,
     "2move": moveBird,
     "3move": twoSmallCactus
 };
-
-// functzz
 
 // function moveObject(num) {
 //     if (actColumn == 1) {
