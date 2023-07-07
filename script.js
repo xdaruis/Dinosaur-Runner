@@ -137,7 +137,7 @@ function handleObjects() {
     ++score;
     document.getElementById("score").innerHTML = "Score: " + score;
     let randomObject = Math.floor(Math.random() * objects);
-    // let randomObject = 2;
+    // let randomObject = 3;
     for (let i = 0; i < dict[randomObject].length; ++i) {
         if (randomObject == 2) {
             dict[randomObject][i] = birdId;
@@ -214,7 +214,7 @@ function moveOneCactus() {
         document.getElementById(cactusOneId).className = "btn btn-warning";
         --actColumn
         cactusOneId = "1" + " " + actColumn;
-        if (document.getElementById(cactusOneId).className === "btn btn-success") {
+        if (actColumn < 2 && document.getElementById(cactusOneId).className === "btn btn-success") {
             document.getElementById(cactusOneId).className = "btn btn-dark";
             gameOver();
         }
@@ -240,7 +240,7 @@ function moveTwoHeightCactus() {
         --actColumn
         cactusOneId = "1" + " " + actColumn;
         cactusTwoId = "2" + " " + actColumn;
-        if (document.getElementById(cactusOneId).className === "btn btn-success" ||
+        if (actColumn < 2 && document.getElementById(cactusOneId).className === "btn btn-success" ||
             document.getElementById(cactusTwoId).className === "btn btn-success") {
             document.getElementById(cactusOneId).className = "btn btn-dark";
             gameOver();
@@ -265,7 +265,7 @@ function moveBird() {
         document.getElementById(birdId).className = "btn btn-warning";
         --actColumn
         birdId = "" + birdHeight + " " + actColumn;
-        if (document.getElementById(birdId).className === "btn btn-success") {
+        if (actColumn < 2 && document.getElementById(birdId).className === "btn btn-success") {
             document.getElementById(birdId).className = "btn btn-dark";
             gameOver();
         }
@@ -291,8 +291,8 @@ function twoSmallCactus() {
         --actColumn
         cactusOneId = "1" + " " + actColumn;
         smallCactusId = "1" + " " + (actColumn - 1);
-        if (document.getElementById(cactusOneId).className === "btn btn-success" ||
-            document.getElementById(smallCactusId).className === "btn btn-success") {
+        if (actColumn < 3 && (document.getElementById(cactusOneId).className === "btn btn-success" ||
+            document.getElementById(smallCactusId).className === "btn btn-success")) {
             document.getElementById(cactusOneId).className = "btn btn-dark";
             document.getElementById(smallCactusId).className = "btn btn-dark";
             gameOver();
