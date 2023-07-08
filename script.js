@@ -160,7 +160,7 @@ const dict = {
     "0move": moveOneCactus,
     "1move": moveTwoHeightCactus,
     "2move": moveBird,
-    "3move": twoSmallCactus
+    "3move": moveTwoSmallCactus
 };
 
 // function moveObject(num) {
@@ -273,7 +273,7 @@ function moveBird() {
     }
 }
 
-function twoSmallCactus() {
+function moveTwoSmallCactus() {
     if (actColumn == 1) {
         if (document.getElementById(cactusOneId).className === "btn btn-dark" ||
             document.getElementById(smallCactusId).className === "btn btn-dark") {
