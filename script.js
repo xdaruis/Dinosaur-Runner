@@ -82,10 +82,10 @@ function movePlayer(value) {
     colorPosition("btn btn-warning");
     playerFeet += value;
     playerHead += value;
-    if ((document.getElementById(playerHead).className === "btn btn-dark" ||
-        document.getElementById(playerFeet).className === "btn btn-dark")) {
-        gameOver();
-    }
+    // if ((document.getElementById(playerHead).className === "btn btn-dark" ||
+    //     document.getElementById(playerFeet).className === "btn btn-dark")) {
+    //     gameOver();
+    // }
     colorPosition("btn btn-success");
 }
 
