@@ -111,7 +111,7 @@ let actColumnId = columns;
 let cactusOneId = "1" + " " + actColumnId;
 document.getElementById(cactusOneId).className = "btn btn-dark";
 
-let smallCactusId = "1" + " " + (columns - 1);
+let smallCactusId = "1" + " " + (actColumnId - 1);
 
 let cactusTwoId = "2" + " " + actColumnId;
 
