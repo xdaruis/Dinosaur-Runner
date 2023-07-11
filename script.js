@@ -16,6 +16,7 @@ function generateBoard() {
         for (let j = 1; j <= columns; ++j) {
             const btn = document.createElement('button');
             btn.id = "" + i + " " + j;
+            btn.innerHTML = btn.id;
             btn.innerHTML = "";
             btn.className = "btn btn-warning";
             btn.disabled = true;
@@ -111,35 +112,35 @@ let actColumnId = columns;
 let cactusOneId = "1" + " " + actColumnId;
 document.getElementById(cactusOneId).className = "btn btn-dark";
 
-let smallCactusId = "1" + " " + (actColumnId - 1);
+let anotherSmallCactusId = "1" + " " + (actColumnId - 1);
 
 let cactusTwoId = "2" + " " + actColumnId;
 
-let birdHeight = 1 + Math.floor(Math.random() * lines / 2);
+let birdHeight = 1 + Math.floor(Math.random() * 3);
 let birdId = "" + birdHeight + " " + actColumnId;
 
-let objects = 1;
+let uniqueObjects = 1;
 
 function handleObjects() {
     const scoreUpdates = [5, 10, 15];
     if (scoreUpdates.includes(score)) {
-        ++objects;
+        ++uniqueObjects;
     }
     if (gameSpeed > MAX_GAME_SPEED) {
         gameSpeed -= 0.5;
     }
     ++score;
     document.getElementById("score").innerHTML = "Score: " + score;
-    let randomObject = Math.floor(Math.random() * objects);
-    // let randomObject = 3;
-    for (let i = 0; i < dict[randomObject].length; ++i) {
-        if (randomObject == 2) {
-            dict[randomObject][i] = birdId;
+    let actObject = Math.floor(Math.random() * uniqueObjects);
+    // let actObject = 2;
+    for (let i = 0; i < dict[actObject].length; ++i) {
+        if (actObject == 2) {
+            dict[actObject][i] = birdId;
         }
-        document.getElementById(dict[randomObject][i]).className = "btn btn-dark";
+        document.getElementById(dict[actObject][i]).className = "btn btn-dark";
     }
-    gameInterval = setInterval(dict["" + randomObject + "move"], gameSpeed);
-    // gameInterval = setInterval(moveObject(randomObject), gameSpeed);
+    gameInterval = setInterval(dict["" + actObject + "move"], gameSpeed);
+    // gameInterval = setInterval(moveObject(actObject), gameSpeed);
 }
 
 const dict = {
@@ -150,7 +151,7 @@ const dict = {
     0: [cactusOneId],
     1: [cactusOneId, cactusTwoId],
     2: [birdId],
-    3: [cactusOneId, smallCactusId],
+    3: [cactusOneId, anotherSmallCactusId],
     "0move": moveOneCactus,
     "1move": moveTwoHeightCactus,
     "2move": moveBird,
@@ -220,7 +221,7 @@ function moveOneCactus() {
 }
 
 function moveTwoHeightCactus() {
-    if (actColumnId > 1){
+    if (actColumnId > 1) {
         document.getElementById(cactusOneId).className = "btn btn-warning";
         document.getElementById(cactusTwoId).className = "btn btn-warning";
         --actColumnId
@@ -277,30 +278,30 @@ function moveBird() {
 function moveTwoSmallCactus() {
     if (actColumnId > 1) {
         document.getElementById(cactusOneId).className = "btn btn-warning";
-        document.getElementById(smallCactusId).className = "btn btn-warning";
+        document.getElementById(anotherSmallCactusId).className = "btn btn-warning";
         --actColumnId
         cactusOneId = "1" + " " + actColumnId;
-        smallCactusId = "1" + " " + (actColumnId - 1);
+        anotherSmallCactusId = "1" + " " + (actColumnId - 1);
         if (document.getElementById(cactusOneId).className === "btn btn-success" ||
-            document.getElementById(smallCactusId).className === "btn btn-success") {
+            document.getElementById(anotherSmallCactusId).className === "btn btn-success") {
             document.getElementById(cactusOneId).className = "btn btn-dark";
-            document.getElementById(smallCactusId).className = "btn btn-dark";
+            document.getElementById(anotherSmallCactusId).className = "btn btn-dark";
             gameOver();
         }
         document.getElementById(cactusOneId).className = "btn btn-dark";
-        document.getElementById(smallCactusId).className = "btn btn-dark";
+        document.getElementById(anotherSmallCactusId).className = "btn btn-dark";
     } else {
         if (document.getElementById(cactusOneId).className === "btn btn-dark" ||
-            document.getElementById(smallCactusId).className === "btn btn-dark") {
+            document.getElementById(anotherSmallCactusId).className === "btn btn-dark") {
             document.getElementById(cactusOneId).className = "btn btn-warning";
-            document.getElementById(smallCactusId).className = "btn btn-warning";
+            document.getElementById(anotherSmallCactusId).className = "btn btn-warning";
         } else {
             gameOver();
             return;
         }
         actColumnId = columns;
         cactusOneId = "1" + " " + actColumnId;
-        smallCactusId = "1" + " " + (actColumnId - 1);
+        anotherSmallCactusId = "1" + " " + (actColumnId - 1);
         clearInterval(gameInterval);
         handleObjects();
     }
