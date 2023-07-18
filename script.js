@@ -111,13 +111,19 @@ console.log("124");
 const oneCactus = [];
 const twoHeightCactus = [];
 const twoSmallCactus = [];
+const birdOne = [];
+const birdTwo = [];
+const birdThree = [];
 
 buildObjects();
 
 const dict = {
     0: oneCactus,
     1: twoHeightCactus,
-    2: twoSmallCactus
+    2: twoSmallCactus,
+    3: birdOne,
+    4: birdTwo,
+    5: birdThree
 };
 
 function buildObjects() {
@@ -126,8 +132,14 @@ function buildObjects() {
         oneCactus[i] = [];
         twoHeightCactus[i] = [];
         twoSmallCactus[i] = [];
+        birdOne[i] = [];
+        birdTwo[i] = [];
+        birdThree[i] = [];
         for (let j = 0; j < 1; ++j) {
             oneCactus[i][j] = "1 " + (i + 1);
+            birdOne[i][j] = "2 " + (i + 1);
+            birdTwo[i][j] = "3 " + (i + 1);
+            birdThree[i][j] = "4 " + (i + 1);
         }
         for (let j = 0; j < 2; ++j) {
             twoSmallCactus[i][j] = "1 " + (i + 1 - j);
@@ -175,13 +187,15 @@ function handleGame(mt) {
     const scoreUpdates = [5, 10];
     if (scoreUpdates.includes(score)) {
         ++uniqueObjects;
+    } else if (score === 15) {
+        uniqueObjects = 6;
     }
     if (gameSpeed > MAX_GAME_SPEED) {
         gameSpeed -= 0.5;
     }
     ++score;
     document.getElementById("score").innerHTML = "Score: " + score;
-    // let actObject = 1;
+    // let actObject = 3;
     let actObject = Math.floor(Math.random() * uniqueObjects);
     for (let i = 0; i < dict[actObject][0].length; ++i) {
         document.getElementById(dict[actObject][columns - 1][i]).className = "btn btn-dark";
