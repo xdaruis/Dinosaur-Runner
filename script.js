@@ -166,7 +166,7 @@ function moveObjects(mt, actPosition) {
     gameInterval = setInterval(moveObjects, gameSpeed, mt, actPosition);
 }
 
-const dict = {
+const objects = {
     0: oneCactus,
     1: twoHeightCactus,
     2: twoSmallCactus,
@@ -187,10 +187,10 @@ function handleGame(mt) {
     ++score;
     document.getElementById("score").innerHTML = "Score: " + score;
     let actObject = Math.floor(Math.random() * uniqueObjects);
-    for (let i = 0; i < dict[actObject][0].length; ++i) {
-        document.getElementById(dict[actObject][columns - 1][i]).className = "btn btn-dark";
+    for (let i = 0; i < objects[actObject][0].length; ++i) {
+        document.getElementById(objects[actObject][columns - 1][i]).className = "btn btn-dark";
     }
-    gameInterval = setInterval(moveObjects, gameSpeed, dict[actObject], columns);
+    gameInterval = setInterval(moveObjects, gameSpeed, objects[actObject], columns);
 }
 
 function gameOver() {
