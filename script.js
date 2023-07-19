@@ -1,7 +1,7 @@
 const SCORE_UPDATES = [5, 10, 15];
 const MAX_OBJECTS = 6;
 const MAX_OBJECT_SPEED = 40;
-const lines = 10, columns = 12;
+const lines = 10, columns = 17;
 
 let score = 0;
 
@@ -9,7 +9,25 @@ let playerFeet = 1;
 let playerHead = 2;
 let jump = true;
 
-document.onload = generateBoard();
+let gravitySpeed = 75;
+let gravityInterval = null;
+
+let uniqueObjects = 1;
+
+const oneCactus = [];
+const twoHeightCactus = [];
+const twoSmallCactus = [];
+const birdOne = [];
+const birdTwo = [];
+const birdThree = [];
+
+generateBoard();
+
+buildObjects();
+
+document.getElementById(oneCactus[oneCactus.length - 1]).className = "btn btn-dark";
+let objectSpeed = 150;
+let gameInterval = setInterval(moveObjects, objectSpeed, oneCactus, columns);
 
 function generateBoard() {
     for (let i = lines; i > 0; --i) {
@@ -34,6 +52,27 @@ function generateBoard() {
     text.id = "score";
     text.innerHTML = "Score : 0";
     box.appendChild(text);
+}
+
+function buildObjects() {
+    for (let i = 0; i < columns; ++i) {
+        oneCactus[i] = [];
+        twoHeightCactus[i] = [];
+        twoSmallCactus[i] = [];
+        birdOne[i] = [];
+        birdTwo[i] = [];
+        birdThree[i] = [];
+        for (let j = 0; j < 1; ++j) {
+            oneCactus[i][j] = "1 " + (i + 1);
+            birdOne[i][j] = "2 " + (i + 1);
+            birdTwo[i][j] = "3 " + (i + 1);
+            birdThree[i][j] = "4 " + (i + 1);
+        }
+        for (let j = 0; j < 2; ++j) {
+            twoSmallCactus[i][j] = "1 " + (i + 1 - j);
+            twoHeightCactus[i][j] = "" + (1 + j) + " " + (i + 1);
+        }
+    }
 }
 
 document.addEventListener('keydown', (e) => {
@@ -87,9 +126,6 @@ function colorPosition(color) {
     document.getElementById("" + playerHead + " " + "1").className = color;
 }
 
-let gravitySpeed = 75;
-let gravityInterval = null;
-
 function fall() {
     if (playerFeet > 1) {
         movePlayer(-1);
@@ -99,43 +135,6 @@ function fall() {
         gravityInterval = null;
     }
 }
-
-let uniqueObjects = 1;
-
-const oneCactus = [];
-const twoHeightCactus = [];
-const twoSmallCactus = [];
-const birdOne = [];
-const birdTwo = [];
-const birdThree = [];
-
-buildObjects();
-
-function buildObjects() {
-    for (let i = 0; i < columns; ++i) {
-        oneCactus[i] = [];
-        twoHeightCactus[i] = [];
-        twoSmallCactus[i] = [];
-        birdOne[i] = [];
-        birdTwo[i] = [];
-        birdThree[i] = [];
-        for (let j = 0; j < 1; ++j) {
-            oneCactus[i][j] = "1 " + (i + 1);
-            birdOne[i][j] = "2 " + (i + 1);
-            birdTwo[i][j] = "3 " + (i + 1);
-            birdThree[i][j] = "4 " + (i + 1);
-        }
-        for (let j = 0; j < 2; ++j) {
-            twoSmallCactus[i][j] = "1 " + (i + 1 - j);
-            twoHeightCactus[i][j] = "" + (1 + j) + " " + (i + 1);
-        }
-    }
-}
-
-document.getElementById(oneCactus[oneCactus.length - 1]).className = "btn btn-dark";
-
-let objectSpeed = 150;
-let gameInterval = setInterval(moveObjects, objectSpeed, oneCactus, columns)
 
 function moveObjects(mt, actPosition) {
     for (let i = 0; i < mt[0].length; ++i) {
