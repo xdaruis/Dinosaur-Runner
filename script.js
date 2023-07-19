@@ -134,8 +134,8 @@ function buildObjects() {
 
 document.getElementById(oneCactus[oneCactus.length - 1]).className = "btn btn-dark";
 
-let gameSpeed = 150;
-let gameInterval = setInterval(moveObjects, gameSpeed, oneCactus, columns)
+let objectSpeed = 150;
+let gameInterval = setInterval(moveObjects, objectSpeed, oneCactus, columns)
 
 function moveObjects(mt, actPosition) {
     for (let i = 0; i < mt[0].length; ++i) {
@@ -160,10 +160,10 @@ function moveObjects(mt, actPosition) {
                 document.getElementById(mt[0][i]).className = "btn btn-warning";
             }
             handleGame(mt);
-        }, gameSpeed); 
+        }, objectSpeed); 
         return;
     }
-    gameInterval = setInterval(moveObjects, gameSpeed, mt, actPosition);
+    gameInterval = setInterval(moveObjects, objectSpeed, mt, actPosition);
 }
 
 const objects = {
@@ -181,8 +181,8 @@ function handleGame(mt) {
     } else if (score === SCORE_UPDATES[2]) {
         uniqueObjects = MAX_OBJECTS;
     }
-    if (gameSpeed > MAX_GAME_SPEED) {
-        gameSpeed -= 0.5;
+    if (objectSpeed > MAX_GAME_SPEED) {
+        objectSpeed -= 0.5;
     }
     ++score;
     document.getElementById("score").innerHTML = "Score: " + score;
@@ -190,7 +190,7 @@ function handleGame(mt) {
     for (let i = 0; i < objects[actObject][0].length; ++i) {
         document.getElementById(objects[actObject][columns - 1][i]).className = "btn btn-dark";
     }
-    gameInterval = setInterval(moveObjects, gameSpeed, objects[actObject], columns);
+    gameInterval = setInterval(moveObjects, objectSpeed, objects[actObject], columns);
 }
 
 function gameOver() {
