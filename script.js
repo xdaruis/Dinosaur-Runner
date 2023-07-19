@@ -1,5 +1,5 @@
 const SCORE_UPDATES = [5, 10, 15];
-const MAX_OBJECTS = 6;
+const MAX_NUM_OBJECTS = 6;
 const MAX_OBJECT_SPEED = 40;
 const lines = 10, columns = 17;
 
@@ -178,7 +178,7 @@ function handleGame(mt) {
     if (score === SCORE_UPDATES[0] || score === SCORE_UPDATES[1]) {
         ++uniqueObjects;
     } else if (score === SCORE_UPDATES[2]) {
-        uniqueObjects = MAX_OBJECTS;
+        uniqueObjects = MAX_NUM_OBJECTS;
     }
     if (objectSpeed > MAX_OBJECT_SPEED) {
         objectSpeed -= 0.5;
