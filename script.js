@@ -1,6 +1,8 @@
-console.log("START");
+const SCORE_UPDATES = [5, 10, 15];
+const MAX_OBJECTS = 6;
 const MAX_GAME_SPEED = 40;
 const lines = 10, columns = 12;
+
 let score = 0;
 
 let playerFeet = 1;
@@ -18,14 +20,13 @@ function generateBoard() {
             const btn = document.createElement('button');
             btn.id = "" + i + " " + j;
             btn.innerHTML = "&nbsp;";
-            // btn.innerHTML = btn.id;
             btn.className = "btn btn-warning";
             btn.disabled = true;
             box.appendChild(btn);
         }
     }
-    // document.getElementById("" + playerFeet + " " + "1").className = "btn btn-success";
-    // document.getElementById("" + playerHead + " " + "1").className = "btn btn-success";
+    document.getElementById("" + playerFeet + " " + "1").className = "btn btn-success";
+    document.getElementById("" + playerHead + " " + "1").className = "btn btn-success";
     const box = document.createElement("div");
     box.className = "d-flex justify-content-center";
     document.body.appendChild(box);
@@ -99,14 +100,7 @@ function fall() {
     }
 }
 
-console.log("101");
-
-// let birdHeight = 1 + Math.floor(Math.random() * 3);
-// let birdId = "" + birdHeight + " " + actColumnId;
-
 let uniqueObjects = 1;
-
-console.log("124");
 
 const oneCactus = [];
 const twoHeightCactus = [];
@@ -117,18 +111,8 @@ const birdThree = [];
 
 buildObjects();
 
-const dict = {
-    0: oneCactus,
-    1: twoHeightCactus,
-    2: twoSmallCactus,
-    3: birdOne,
-    4: birdTwo,
-    5: birdThree
-};
-
 function buildObjects() {
     for (let i = 0; i < columns; ++i) {
-        // console.log("TEST");
         oneCactus[i] = [];
         twoHeightCactus[i] = [];
         twoSmallCactus[i] = [];
@@ -153,20 +137,20 @@ document.getElementById(oneCactus[oneCactus.length - 1]).className = "btn btn-da
 let gameSpeed = 150;
 let gameInterval = setInterval(moveObjects, gameSpeed, oneCactus, columns)
 
-function moveObjects(mt, itr) {
+function moveObjects(mt, actPosition) {
     for (let i = 0; i < mt[0].length; ++i) {
-        document.getElementById(mt[itr - 1][i]).className = "btn btn-warning";
+        document.getElementById(mt[actPosition - 1][i]).className = "btn btn-warning";
     }
-    --itr;
+    --actPosition;
     for (let i = 0; i < mt[0].length; ++i) {
-        if (document.getElementById(mt[itr - 1][i]).className === "btn btn-success") {
+        if (document.getElementById(mt[actPosition - 1][i]).className === "btn btn-success") {
             gameOver();
             return;
         }
-        document.getElementById(mt[itr - 1][i]).className = "btn btn-dark";
+        document.getElementById(mt[actPosition - 1][i]).className = "btn btn-dark";
     }
     clearInterval(gameInterval);
-    if (itr == 1) {
+    if (actPosition == 1) {
         setTimeout(function() {
             for (let i = 0; i < mt[0].length; ++i) {
                 if (document.getElementById(mt[0][i]).className === "btn btn-success") {
@@ -179,31 +163,35 @@ function moveObjects(mt, itr) {
         }, gameSpeed); 
         return;
     }
-    gameInterval = setInterval(moveObjects, gameSpeed, mt, itr);
+    gameInterval = setInterval(moveObjects, gameSpeed, mt, actPosition);
 }
 
+const dict = {
+    0: oneCactus,
+    1: twoHeightCactus,
+    2: twoSmallCactus,
+    3: birdOne,
+    4: birdTwo,
+    5: birdThree
+};
+
 function handleGame(mt) {
-    // const scoreUpdates = [5, 10, 15];
-    const scoreUpdates = [5, 10];
-    if (scoreUpdates.includes(score)) {
+    if (score === SCORE_UPDATES[0] || score === SCORE_UPDATES[1]) {
         ++uniqueObjects;
-    } else if (score === 15) {
-        uniqueObjects = 6;
+    } else if (score === SCORE_UPDATES[2]) {
+        uniqueObjects = MAX_OBJECTS;
     }
     if (gameSpeed > MAX_GAME_SPEED) {
         gameSpeed -= 0.5;
     }
     ++score;
     document.getElementById("score").innerHTML = "Score: " + score;
-    // let actObject = 3;
     let actObject = Math.floor(Math.random() * uniqueObjects);
     for (let i = 0; i < dict[actObject][0].length; ++i) {
         document.getElementById(dict[actObject][columns - 1][i]).className = "btn btn-dark";
     }
     gameInterval = setInterval(moveObjects, gameSpeed, dict[actObject], columns);
 }
-
-console.log("162");
 
 function gameOver() {
     clearInterval(gameInterval);
@@ -221,5 +209,3 @@ function gameOver() {
         event.stopImmediatePropagation();
     }, true);
 }
-
-console.log("END");
